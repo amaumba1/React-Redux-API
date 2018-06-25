@@ -89,3 +89,8 @@ function App({ list }) {
     return <ListWithArchive list={list} /> 
 }
 
+// The List component would only display the items.The ability to archive an item in the List
+// component would be opt -in with a higher - order component called withArchive.In addition, the
+// HOC can be reused in other List components too for managing the state of archived items.After
+// all, higher - order components are great to extract local state management from components and to
+// reuse the local state management logic in other components.
