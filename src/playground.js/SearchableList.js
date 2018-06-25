@@ -7,10 +7,12 @@ class SearchableList extends Component {
         super(props)
 
         this.state = {
-            query: ''
+            query: '',
+            archiveItems: []
         }
 
         this.onChange = this.onChange.bind(this)
+        this.onArchive = this.onArchive.bind(this)
     }
 
     onChange() {
@@ -22,9 +24,22 @@ class SearchableList extends Component {
         })
     }
 
+    onArchive() {
+        const { archiveItems } = this.state
+
+        this.setState({
+            archiveItems: [ ...archiveItems, id ]
+        })
+    }
+
         render() {
-            const { list } = this.props
-            const { query } = this.state 
+
+        const { list } = this.props
+        const { query, archiveItems } = this.state 
+
+        const filterList = list 
+            .filter(byQuery(query))
+            .filter(byArchived(archiveItems))
 
         return (
             <div>
@@ -33,7 +48,10 @@ class SearchableList extends Component {
                     onChange={this.onChange}
                 >Search List
                 </Search>
-                <List list={(list || []).filter(byQuery(query))} /> 
+                <List 
+                    list={filterList}
+                    onArchive={this.onArchive}
+                /> 
             </div>
         )
     }
@@ -41,5 +59,8 @@ class SearchableList extends Component {
 
 const byQuery = (query) => (item) => 
     !query || item.name.toLowerCase().includes(query.toLowerCase()); 
+
+const byArchived = (archiveItems) => (item) => 
+    !archiveItems.includes(item.id); 
     
 export default SearchableList; 
