@@ -35,12 +35,11 @@ class SearchableList extends Component {
         render() {
 
         const { list } = this.props
-        const { query, archiveItems } = this.state 
+        const { query } = this.state 
 
-        const filterList = list 
+        const filteredList = list 
             .filter(byQuery(query))
-            .filter(byArchived(archiveItems))
-
+           
         return (
             <div>
                 <Search
@@ -48,10 +47,7 @@ class SearchableList extends Component {
                     onChange={this.onChange}
                 >Search List
                 </Search>
-                <List 
-                    list={filterList}
-                    onArchive={this.onArchive}
-                /> 
+                <List list={filteredList}/> 
             </div>
         )
     }
@@ -59,8 +55,5 @@ class SearchableList extends Component {
 
 const byQuery = (query) => (item) => 
     !query || item.name.toLowerCase().includes(query.toLowerCase()); 
-
-const byArchived = (archiveItems) => (item) => 
-    !archiveItems.includes(item.id); 
-    
+ 
 export default SearchableList; 
