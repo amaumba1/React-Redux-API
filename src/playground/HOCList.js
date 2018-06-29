@@ -71,7 +71,7 @@ function List({ list, onArchive }) {
                                 type='button'
                                 onClick={() => onArchive(item.id)}
                             >
-                                Archive
+                                Archive file
                             </button>
                         </span>
                     </li>
